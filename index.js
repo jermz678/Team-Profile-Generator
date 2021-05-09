@@ -26,6 +26,10 @@ const Employee = require('./lib/Employee');
 
 //creating function to ask for managers information
 
+
+
+
+
 const register = function(){
     
     inquirer.prompt([
@@ -53,20 +57,110 @@ const register = function(){
             type: 'input',
             name: 'officeNumber',
             message: "Enter the Office Phone Number"
-    
+        },
+        {
+            type: 'list',
+            name: 'position',
+            message: 'Would you like to add an Engineer or Intern',
+            choices: ['Engineer', 'Intern', 'Finish building my team'],
+
         }
+        
     ])
         .then(data => {
-            console.log(data.name)
-            const employee = new Employee(data.name, data.id, data.email )
+            
             const manager = new Manager(data.name, data.id, data.email, data.officeNumber)
             console.log(manager)
-            console.log(employee)
+            if(data.position !== 'Finish building my team'){
+                console.log(data.position)
+                if(data.position === 'Engineer'){
+                    console.log(data.position, "whahtahthta")
+
+                    inquirer.prompt([
+                        {
+                            type: 'input',
+                            name: 'name',
+                            message: "Enter the Engineer's Name"
+                    
+                        },
+                        {
+                            type: 'input',
+                            name: 'id',
+                            message: "Enter the Engineers's ID number"
+                    
+                        },
+                        {
+                            type: 'input',
+                            name: 'email',
+                            message: "Enter the Engineer's Email Address"
+                    
+                        },
+                        {
+                            
+                                type: 'input',
+                                name: 'github',
+                                message: 'What is the Employee GitHub user name?'
+                        },
+                        {
+                            type: 'list',
+                            name: 'position',
+                            message: 'Would you like to add an Engineer or Intern',
+                            choices: ['Engineer', 'Intern', 'Finish building my team'],
+                
+                        }
+
+                    ])
+                    .then(data => {
+                        const engineer = new Engineer(data.name, data.id, data.email, data.github)
+                        console.log(engineer)
+                        return data;
+                    })
+                }
+                else{
+                    inquirer.prompt([
+                        {
+                            type: 'input',
+                            name: 'name',
+                            message: "Enter the Intern's Name"
+                    
+                        },
+                        {
+                            type: 'input',
+                            name: 'id',
+                            message: "Enter the Intern's ID number"
+                    
+                        },
+                        {
+                            type: 'input',
+                            name: 'email',
+                            message: "Enter the Intern's Email Address"
+                    
+                        },
+                        {
+                            type: 'input',
+                            name: 'school',
+                            message: 'Where does the Intern attend school?'
+                        }
+
+                    ])
+                    .then(data => {
+                        const intern = new Intern(data.name, data.id, data.email, data.school)
+                        console.log(intern)
+                        return data;
+                    })
+                }
+
+            }
+            // const employee = new Employee(data.name, data.id, data.email )
+            // const manager = new Manager(data.name, data.id, data.email, data.officeNumber)
+            // console.log(manager)
+            // console.log(employee)
+            // console.log(data.position)
                 return data;
-                    
-                    
-    })
         
-    
+        
+    })
+         
+
 }
 register()
