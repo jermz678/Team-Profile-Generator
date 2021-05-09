@@ -1,8 +1,8 @@
 
 
-function generateHTML() {
+function generateHTML(manager) {
 
-    `<!DOCTYPE html>
+   return  `<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -15,38 +15,39 @@ function generateHTML() {
             <h1>My Team
             </h1>
         </header>
-        <section>
-            <div>
-                <ul>
-                    <li> ${Name} <li>
-                    <li> ${Role} <li>
-                    <li> ${ID} <li>
-                    <li> ${Email} <li>
-                    <li> ${officeNumber} <li>
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <li> ${Name} <li>
-                    <li> ${Role} <li>
-                    <li> ${ID} <li>
-                    <li> ${Email} <li>
-                    <li> ${officeNumber} <li>
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <li> ${Name} <li>
-                    <li> ${Role} <li>
-                    <li> ${ID} <li>
-                    <li> ${Email} <li>
-                    <li> ${officeNumber} <li>
-        </ul>
-            </div>
-        </section>
-    </body>
+        </body>
     </html>`
+        // <section>
+        //     <div>
+        //         <ul>
+        //             <li> ${Name} <li>
+        //             <li> ${Role} <li>
+        //             <li> ${ID} <li>
+        //             <li> ${Email} <li>
+        //             <li> ${officeNumber} <li>
+        //         </ul>
+        //     </div>
+        //     <div>
+        //         <ul>
+        //             <li> ${Name} <li>
+        //             <li> ${Role} <li>
+        //             <li> ${ID} <li>
+        //             <li> ${Email} <li>
+        //             <li> ${officeNumber} <li>
+        //         </ul>
+        //     </div>
+        //     <div>
+        //         <ul>
+        //             <li> ${Name} <li>
+        //             <li> ${Role} <li>
+        //             <li> ${ID} <li>
+        //             <li> ${Email} <li>
+        //             <li> ${officeNumber} <li>
+        // </ul>
+         //  </div>
+    //</section>
+    
 
 
 }
-generateHTML()
+module.export = generateHTML()
