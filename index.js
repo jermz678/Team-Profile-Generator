@@ -6,23 +6,17 @@ const Manager = require('./lib/Manager');
 const Employee = require('./lib/Employee');
 const generateHTML = require('./dist/generateHTML')
 
-// GIVEN a command-line application that accepts user input
 // WHEN I am prompted for my team members and their information
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
 // WHEN I click on an email address in the HTML
 // THEN my default email program opens and populates the TO field of the email with the address
 // WHEN I click on the GitHub username
 // THEN that GitHub profile opens in a new tab
-// WHEN I start the application
-// THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
-// WHEN I enter the team manager’s name, employee ID, email address, and office number
-// THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
-// WHEN I select the engineer option
-// THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
-// WHEN I select the intern option
-// THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
-// WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
+
+//array to hold all team members
+teamMembers = []
+
 
 //manager questions
 const managerQuestions = [
@@ -114,22 +108,33 @@ const internQuestions = [
     }
 ]
 
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) => {
+        console.log(err)
+    })
+}
+
 //intern questions function
 iQuestions = function() {
     inquirer.prompt(internQuestions)
     .then((data => {
         const intern = new Intern(data.name, data.id, data.email, data.school)
         console.log(intern)
-    
+        teamMembers.push(intern)
+        console.log(teamMembers)
+        
         if(data.position === 'Intern'){
             iQuestions();
         }if(data.position === 'Engineer'){
             eQuestions();
         }if(data.position ===  'Finish building my team'){
             console.log("Thank you!")
+            let markdown = generateHTML(teamMembers);
+            writeToFile('./index.html', markdown)
+
 
         }
-        return data;
+        //return data;
 }))}
 
 //Engineer questions function
@@ -138,6 +143,8 @@ eQuestions = function() {
     .then((data => {
         const engineer = new Engineer(data.name, data.id, data.email, data.github)
         console.log(engineer)
+        teamMembers.push(engineer)
+        console.log(teamMembers)
     
         if(data.position === 'Engineer'){
             eQuestions();
@@ -145,33 +152,35 @@ eQuestions = function() {
             iQuestions();
         }if(data.position ===  'Finish building my team'){
             console.log("Thank you!")
+            let markdown = generateHTML(teamMembers);
+            writeToFile('./index.html', markdown)
+
         } 
         return data;
 }))}
 
-
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName, data, (err) => {
-        console.log(err)
-    })
-}
-
-function init(){
+//manager questions function
+mQuestions = function(){
         inquirer.prompt(managerQuestions)
     .then(data => {
             
             const manager = new Manager(data.name, data.id, data.email, data.officeNumber)
             console.log(manager)
+            teamMembers.push(manager)
+            console.log(teamMembers)
 
            if(data.position === 'Engineer'){
-                    eQuestions()
+                    eQuestions()        
             }
             else{
                     iQuestions()
             }
+            return data;
     })
+    
 }
 
+mQuestions();
+    
 
-
-init()
+    
