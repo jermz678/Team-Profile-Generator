@@ -59,7 +59,58 @@ const engineerQuestions = [
 }
 ]
 
-//Engineer questions
+const internQuestions = [
+    {
+        type: 'input',
+        name: 'name',
+        message: "Enter the Intern's Name"
+
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: "Enter the Intern's ID number"
+
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: "Enter the Intern's Email Address"
+
+    },
+    {
+        type: 'input',
+        name: 'school',
+        message: 'Where does the Intern attend school?'
+    },
+    {
+        type: 'list',
+        name: 'position',
+        message: 'Would you like to add an Engineer or Intern',
+        choices: ['Engineer', 'Intern', 'Finish building my team'],
+    
+    }
+
+]
+//intern questions function
+iQuestions = function() {
+    inquirer.prompt(internQuestions)
+.then((data => {
+    const intern = new Intern(data.name, data.id, data.email, data.school)
+    console.log(intern)
+    
+    if(data.position === 'Intern'){
+        iQuestions();
+    }if(data.position === 'Engineer'){
+        eQuestions();
+    }if(data.position ===  'Finish building my team'){
+        console.log("Thank you!")
+    }
+    return data;
+}))}
+
+
+//Engineer questions function
 eQuestions = function() {
     inquirer.prompt(engineerQuestions)
 .then((data => {
@@ -68,9 +119,11 @@ eQuestions = function() {
     
     if(data.position === 'Engineer'){
         eQuestions();
-    }else{
-
-    }
+    }if(data.position === 'Intern'){
+        iQuestions();
+    }if(data.position ===  'Finish building my team'){
+        console.log("Thank you!")
+    } 
     return data;
 }))}
 
@@ -104,13 +157,7 @@ const register = function(){
             name: 'officeNumber',
             message: "Enter the Office Phone Number"
         },
-        // {
-        //     type: 'list',
-        //     name: 'position',
-        //     message: 'Would you like to add an Engineer or Intern',
-        //     choices: ['Engineer', 'Intern', 'Finish building my team'],
-
-        // }
+        
         
     ])
         .then(data => {
@@ -140,37 +187,7 @@ const register = function(){
                     eQuestions()
                 }
                 else{
-                    inquirer.prompt([
-                        {
-                            type: 'input',
-                            name: 'name',
-                            message: "Enter the Intern's Name"
-                    
-                        },
-                        {
-                            type: 'input',
-                            name: 'id',
-                            message: "Enter the Intern's ID number"
-                    
-                        },
-                        {
-                            type: 'input',
-                            name: 'email',
-                            message: "Enter the Intern's Email Address"
-                    
-                        },
-                        {
-                            type: 'input',
-                            name: 'school',
-                            message: 'Where does the Intern attend school?'
-                        }
-
-                    ])
-                    .then(data => {
-                        const intern = new Intern(data.name, data.id, data.email, data.school)
-                        console.log(intern)
-                        return data;
-                    })
+                    iQuestions()
                 }
 
             }else{
