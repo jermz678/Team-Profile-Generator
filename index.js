@@ -119,9 +119,8 @@ iQuestions = function() {
     inquirer.prompt(internQuestions)
     .then((data => {
         const intern = new Intern(data.name, data.id, data.email, data.school)
-        console.log(intern)
         teamMembers.push(intern)
-        console.log(teamMembers)
+        
         
         if(data.position === 'Intern'){
             iQuestions();
@@ -142,9 +141,7 @@ eQuestions = function() {
     inquirer.prompt(engineerQuestions)
     .then((data => {
         const engineer = new Engineer(data.name, data.id, data.email, data.github)
-        console.log(engineer)
         teamMembers.push(engineer)
-        console.log(teamMembers)
     
         if(data.position === 'Engineer'){
             eQuestions();
@@ -165,9 +162,7 @@ mQuestions = function(){
     .then(data => {
             
             const manager = new Manager(data.name, data.id, data.email, data.officeNumber)
-            console.log(manager)
             teamMembers.push(manager)
-            console.log(teamMembers)
 
            if(data.position === 'Engineer'){
                     eQuestions()        
