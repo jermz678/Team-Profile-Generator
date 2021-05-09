@@ -24,9 +24,55 @@ const Employee = require('./lib/Employee');
 // WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
 
-//creating function to ask for managers information
+//engineer questions
+const engineerQuestions = [
+{
+    type: 'input',
+    name: 'name',
+    message: "Enter the Engineer's Name"
 
+},
+{
+    type: 'input',
+    name: 'id',
+    message: "Enter the Engineers's ID number"
 
+},
+{
+    type: 'input',
+    name: 'email',
+    message: "Enter the Engineer's Email Address"
+
+},
+{
+    
+        type: 'input',
+        name: 'github',
+        message: 'What is the Employee GitHub user name?'
+},
+{
+    type: 'list',
+    name: 'position',
+    message: 'Would you like to add an Engineer or Intern',
+    choices: ['Engineer', 'Intern', 'Finish building my team'],
+
+}
+]
+
+//Engineer questions
+eQuestions = function() {
+    inquirer.prompt(engineerQuestions)
+.then((data => {
+    const engineer = new Engineer(data.name, data.id, data.email, data.github)
+    console.log(engineer)
+    
+    if(data.position === 'Engineer'){
+        eQuestions();
+    }else{
+
+    }
+    return data;
+}))}
 
 
 
@@ -58,63 +104,40 @@ const register = function(){
             name: 'officeNumber',
             message: "Enter the Office Phone Number"
         },
-        {
-            type: 'list',
-            name: 'position',
-            message: 'Would you like to add an Engineer or Intern',
-            choices: ['Engineer', 'Intern', 'Finish building my team'],
+        // {
+        //     type: 'list',
+        //     name: 'position',
+        //     message: 'Would you like to add an Engineer or Intern',
+        //     choices: ['Engineer', 'Intern', 'Finish building my team'],
 
-        }
+        // }
         
     ])
         .then(data => {
             
             const manager = new Manager(data.name, data.id, data.email, data.officeNumber)
             console.log(manager)
+
+           
+                inquirer.prompt([
+                {
+                    type: 'list',
+                    name: 'position',
+                    message: 'Would you like to add an Engineer or Intern',
+                    choices: ['Engineer', 'Intern', 'Finish building my team'],
+        
+                }
+            
+            ])
+        
+            .then(data => {
             if(data.position !== 'Finish building my team'){
                 console.log(data.position)
                 if(data.position === 'Engineer'){
                     console.log(data.position, "whahtahthta")
 
-                    inquirer.prompt([
-                        {
-                            type: 'input',
-                            name: 'name',
-                            message: "Enter the Engineer's Name"
                     
-                        },
-                        {
-                            type: 'input',
-                            name: 'id',
-                            message: "Enter the Engineers's ID number"
-                    
-                        },
-                        {
-                            type: 'input',
-                            name: 'email',
-                            message: "Enter the Engineer's Email Address"
-                    
-                        },
-                        {
-                            
-                                type: 'input',
-                                name: 'github',
-                                message: 'What is the Employee GitHub user name?'
-                        },
-                        {
-                            type: 'list',
-                            name: 'position',
-                            message: 'Would you like to add an Engineer or Intern',
-                            choices: ['Engineer', 'Intern', 'Finish building my team'],
-                
-                        }
-
-                    ])
-                    .then(data => {
-                        const engineer = new Engineer(data.name, data.id, data.email, data.github)
-                        console.log(engineer)
-                        return data;
-                    })
+                    eQuestions()
                 }
                 else{
                     inquirer.prompt([
@@ -150,7 +173,11 @@ const register = function(){
                     })
                 }
 
+            }else{
+                console.log("Thanks!!")
             }
+            
+        
             // const employee = new Employee(data.name, data.id, data.email )
             // const manager = new Manager(data.name, data.id, data.email, data.officeNumber)
             // console.log(manager)
@@ -162,5 +189,5 @@ const register = function(){
     })
          
 
-}
+})}
 register()
